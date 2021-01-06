@@ -73,8 +73,6 @@ public:
 
    bool isDefined(std::string var);
 
-   void Delete(std::string var);
-
    int& operator[](std::string var);
 
 private:

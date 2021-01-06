@@ -30,6 +30,7 @@ void processLine(string line, Program & program, EvalState & state);
 int main() {
    EvalState state;
    Program program;
+   cout << "Stub implementation of BASIC" << endl;
    while (true) {
       try {
          processLine(getLine(), program, state);//evalstate相当于内存空间
@@ -113,6 +114,7 @@ void processLine(string line, Program & program, EvalState & state) {
             do{
               l_string+=token;
               token=scanner.nextToken();
+              cout<<l_string<<"\n";
             }while(token!=">"&&token!="<"&&token!="=");
 
             string cmp=token;
@@ -121,6 +123,7 @@ void processLine(string line, Program & program, EvalState & state) {
             do{
                 r_string+=token;
                 token=scanner.nextToken();
+                cout<<r_string<<"\n";
             }while(token!="THEN");
 
             int l=stringToInteger(scanner.nextToken());

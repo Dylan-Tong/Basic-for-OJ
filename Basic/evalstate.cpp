@@ -34,10 +34,6 @@ bool EvalState::isDefined(string var) {
    return symbolTable.containsKey(var);
 }
 
-void EvalState::Delete(string var){
-    symbolTable.remove(var);
-}
-
 int& EvalState::operator[](string var){
     return symbolTable[var];
 }

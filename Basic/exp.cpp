@@ -113,7 +113,9 @@ CompoundExp::~CompoundExp() {
 
 int CompoundExp::eval(EvalState & state) {
    if (op == "=") {
-      if (lhs->getType() != IDENTIFIER) {error("Illegal variable in assignment");}
+      if (lhs->getType() != IDENTIFIER) {
+         error("Illegal variable in assignment");
+      }
       int val = rhs->eval(state);
       state.setValue(((IdentifierExp *) lhs)->getName(), val);
       return val;
@@ -123,10 +125,7 @@ int CompoundExp::eval(EvalState & state) {
    if (op == "+") return left + right;
    if (op == "-") return left - right;
    if (op == "*") return left * right;
-   if (op == "/") {
-       if(right==0)error("Calculating some number divide by zero");
-       return left / right;
-   }
+   if (op == "/") return left / right;
    error("Illegal operator in expression");
    return 0;
 }

@@ -35,10 +35,6 @@ void LET::execute(EvalState &state){
 PRINT::PRINT(Expression* _exp):exp(_exp){}
 
 void PRINT::execute(EvalState& state){
-    if(exp->getType()==IDENTIFIER){
-        if(!state.isDefined(exp->toString()))
-            error("User types wrong value to answer INPUT statement.");
-    }
     cout<<exp->eval(state)<<endl;
 }
 
@@ -46,13 +42,7 @@ INPUT::INPUT(string s):var(s),value(0){};
 
 void INPUT::execute(EvalState &state) {
     cout<<"?";
-   string token;
-   cin>>token;
-    for(char c:token)
-    {
-        if(c<'0'||c>'9')error("INVALID NUMBER");
-    }
-    value=stringToInteger(token);
+    cin>>value;
     state.setValue(var,value);
 }
 
@@ -77,11 +67,12 @@ IF_THEN::IF_THEN(Expression* l,string op,Expression* r,int number,int f_l)
 void IF_THEN::execute(EvalState& state){
     int left=lh->eval(state);
     int right=rh->eval(state);
-    bool judge=true;
-    if(cmp=="=")judge=(left==right);
+    bool judge=false;
+    if(cmp=="==")judge=(left==right);
     else if(cmp==">")judge=(left>right);
+    else if(cmp==">=")judge=(left>=right);
     else if(cmp=="<")judge=(left<right);
-    else error("SYNTAX ERROR");
+    else judge=(left<=right);
     if(judge)//state.setValue("IF_THEN",line_number);
     {
         state["is_IF_THEN"]=from_line;

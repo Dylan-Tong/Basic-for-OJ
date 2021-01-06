@@ -134,27 +134,18 @@ void Program::RUN(int start,EvalState& state){
         while(iter!=v_line.end())//运行到结束
         {
             iter->Paresed->execute(state);//执行程序
+            ++iter;
             if(state.isDefined("END"))break;//停止程序
-            if(state.isDefined("GOTO"))
+            else if(state.isDefined("GOTO"))
             {
                 if(iter->line_number==state.getValue("is_GOTO"))
-                {
-                    if (!find(iter, state.getValue("GOTO")))
-                        error("GOTO statement's line number not exist.");
-                    state.Delete("GOTO");
-                    state.Delete("is_GOTO");
-                }
+                find(iter,state.getValue("GOTO"));//修改指针位置
             }
             else if(state.isDefined("IF_THEN"))
             {
-                if(iter->line_number==state.getValue("is_IF_THEN")) {
-                    if (!find(iter, state.getValue("IF_THEN")))
-                        error("GOTO statement's line number not exist.");
-                    state.Delete("IF_THEN");
-                    state.Delete("is_IF_THEN");
-                }
+                if(iter->line_number==state.getValue("is_IF_THEN"))
+                find(iter,state.getValue("IF_THEN"));
             }
-            else ++iter;
         }
     }
 }
