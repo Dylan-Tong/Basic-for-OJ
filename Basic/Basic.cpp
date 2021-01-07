@@ -145,7 +145,10 @@ void processLine(string line, Program & program, EvalState & state) {
     {
         if(token=="RUN")program.RUN(program.getFirstLineNumber(),state);
         else if(token=="LIST")program.LIST(state);
-        else if(token=="CLEAR")program.CLEAR(state);
+        else if(token=="CLEAR"){
+            program.CLEAR(state);
+            state.Clear();
+        }
         else if(token=="QUIT")exit(0);
         else if(token=="HELP")
         {
@@ -168,11 +171,22 @@ void processLine(string line, Program & program, EvalState & state) {
         else if(token=="INPUT")
         {
             if(!scanner.hasMoreTokens())error("SYNTAX ERROR");
-            cout<<"?";
+            //cout<<"?";
             token=scanner.nextToken();
+            string var=token;
+            TokenType type=scanner.getTokenType(token);
+            if(type!=WORD)error("SYNTAX ERROR");
             int value;
-            cin>>value;
-            state[token]=value;
+            while(true)
+             {
+                scanner.setInput(getLine());
+                token=scanner.nextToken();
+                type=scanner.getTokenType(token);
+                if(type==NUMBER)break;
+                error("INVALID NUMBER");
+            }
+            value=stringToInteger(token);
+            state[var]=value;
         }
         else if(token=="END")exit(0);
         else error("SYNTAX ERROR");

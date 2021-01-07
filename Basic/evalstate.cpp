@@ -37,3 +37,8 @@ bool EvalState::isDefined(string var) {
 int& EvalState::operator[](string var){
     return symbolTable[var];
 }
+
+void EvalState::Clear()
+{
+    symbolTable.clear();
+}

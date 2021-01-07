@@ -75,6 +75,7 @@ public:
 
    int& operator[](std::string var);
 
+    void Clear();
 private:
 
    Map<std::string,int> symbolTable;

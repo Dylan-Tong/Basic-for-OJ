@@ -41,7 +41,7 @@ void PRINT::execute(EvalState& state){
 INPUT::INPUT(string s):var(s),value(0){};
 
 void INPUT::execute(EvalState &state) {
-    cout<<"?";
+   //cout<<"?";
     cin>>value;
     state.setValue(var,value);
 }
