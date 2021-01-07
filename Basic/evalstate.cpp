@@ -38,6 +38,11 @@ int& EvalState::operator[](string var){
     return symbolTable[var];
 }
 
+void EvalState::Delete(string var)
+{
+    symbolTable.remove(var);
+}
+
 void EvalState::Clear()
 {
     symbolTable.clear();

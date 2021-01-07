@@ -75,6 +75,8 @@ public:
 
    int& operator[](std::string var);
 
+   void Delete(string var);
+
     void Clear();
 private:
 

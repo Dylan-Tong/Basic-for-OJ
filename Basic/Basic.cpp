@@ -114,7 +114,6 @@ void processLine(string line, Program & program, EvalState & state) {
             do{
               l_string+=token;
               token=scanner.nextToken();
-              cout<<l_string<<"\n";
             }while(token!=">"&&token!="<"&&token!="=");
 
             string cmp=token;
@@ -123,7 +122,6 @@ void processLine(string line, Program & program, EvalState & state) {
             do{
                 r_string+=token;
                 token=scanner.nextToken();
-                cout<<r_string<<"\n";
             }while(token!="THEN");
 
             int l=stringToInteger(scanner.nextToken());
@@ -171,7 +169,7 @@ void processLine(string line, Program & program, EvalState & state) {
         else if(token=="INPUT")
         {
             if(!scanner.hasMoreTokens())error("SYNTAX ERROR");
-            //cout<<"?";
+            cout<<"? ";
             token=scanner.nextToken();
             string var=token;
             TokenType type=scanner.getTokenType(token);

@@ -41,7 +41,7 @@ void PRINT::execute(EvalState& state){
 INPUT::INPUT(string s):var(s),value(0){};
 
 void INPUT::execute(EvalState &state) {
-   //cout<<"?";
+    cout<<"? ";
     cin>>value;
     state.setValue(var,value);
 }
@@ -68,11 +68,10 @@ void IF_THEN::execute(EvalState& state){
     int left=lh->eval(state);
     int right=rh->eval(state);
     bool judge=false;
-    if(cmp=="==")judge=(left==right);
+    if(cmp=="=")judge=(left==right);
     else if(cmp==">")judge=(left>right);
-    else if(cmp==">=")judge=(left>=right);
     else if(cmp=="<")judge=(left<right);
-    else judge=(left<=right);
+    else error("SYNTAX ERROR");
     if(judge)//state.setValue("IF_THEN",line_number);
     {
         state["is_IF_THEN"]=from_line;

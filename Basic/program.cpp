@@ -134,18 +134,29 @@ void Program::RUN(int start,EvalState& state){
         while(iter!=v_line.end())//运行到结束
         {
             iter->Paresed->execute(state);//执行程序
-            ++iter;
-            if(state.isDefined("END"))break;//停止程序
-            else if(state.isDefined("GOTO"))
+            if(state.isDefined("END")){
+                state.Delete("END");
+                break;
+            }//停止程序
+            if(state.isDefined("GOTO"))
             {
                 if(iter->line_number==state.getValue("is_GOTO"))
-                find(iter,state.getValue("GOTO"));//修改指针位置
+                {
+                    find(iter,state.getValue("GOTO"));//修改指针位置
+                    continue;
+                }
             }
-            else if(state.isDefined("IF_THEN"))
+            if(state.isDefined("IF_THEN"))
             {
                 if(iter->line_number==state.getValue("is_IF_THEN"))
-                find(iter,state.getValue("IF_THEN"));
+                {
+                    find(iter, state.getValue("IF_THEN"));
+                    state.Delete("is_IF_THEN");
+                    state.Delete("IF_THEN");
+                    continue;
+                }
             }
+            ++iter;
         }
     }
 }
