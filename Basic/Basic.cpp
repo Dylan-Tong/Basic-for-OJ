@@ -151,6 +151,30 @@ void processLine(string line, Program & program, EvalState & state) {
         {
             cout<<"We have REM LET PRINT INPUT END\n";
         }
+        else if(token=="LET")
+        {
+            Expression* exp=parseExp(scanner);
+            exp->eval(state);
+        }
+        else if(token=="REM")
+        {
+           cout<<line<<endl;
+        }
+        else if(token=="PRINT")
+        {
+            Expression *exp=parseExp(scanner);
+            cout<<exp->eval(state)<<endl;
+        }
+        else if(token=="INPUT")
+        {
+            if(!scanner.hasMoreTokens())error("SYNTAX ERROR");
+            cout<<"?";
+            token=scanner.nextToken();
+            int value;
+            cin>>value;
+            state[token]=value;
+        }
+        else if(token=="END")exit(0);
+        else error("SYNTAX ERROR");
     }
-
 }
