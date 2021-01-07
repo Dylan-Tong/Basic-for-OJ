@@ -35,7 +35,7 @@ int main() {
       try {
          processLine(getLine(), program, state);//evalstate相当于内存空间
       } catch (ErrorException & ex) {
-         cerr<< ex.getMessage() << endl;
+         cout<< ex.getMessage() << endl;
       }
    }
    return 0;
@@ -159,7 +159,7 @@ void processLine(string line, Program & program, EvalState & state) {
         }
         else if(token=="REM")
         {
-           cout<<line<<endl;
+           cout<<line<<"\n";
         }
         else if(token=="PRINT")
         {
@@ -169,20 +169,30 @@ void processLine(string line, Program & program, EvalState & state) {
         else if(token=="INPUT")
         {
             if(!scanner.hasMoreTokens())error("SYNTAX ERROR");
-
             token=scanner.nextToken();
             string var=token;
             TokenType type=scanner.getTokenType(token);
             if(type!=WORD)error("SYNTAX ERROR");
             int value;
-            while(true)
+            bool is_legal=false;
+            while(!is_legal)
              {
+                is_legal=true;
                 cout<<" ? ";
-                scanner.setInput(getLine());
-                token=scanner.nextToken();
-                type=scanner.getTokenType(token);
-                if(type==NUMBER&&!scanner.hasMoreTokens())break;
-                cout<<"INVALID NUMBER"<<endl;
+                token=getLine();
+                if(token[0]=='-')
+                {
+                    for(int i=1;i<token.length();++i)
+                        if(token[i]<'0'||token[i]>'9')
+                            is_legal=false;
+                }
+                else
+                {
+                    for(char i : token)
+                        if(i<'0'||i>'9')
+                            is_legal=false;
+                }
+                 if(!is_legal)cout << "INVALID NUMBER" << endl;
             }
             value=stringToInteger(token);
             state[var]=value;

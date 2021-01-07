@@ -142,7 +142,10 @@ void Program::RUN(int start,EvalState& state){
             {
                 if(iter->line_number==state.getValue("is_GOTO"))
                 {
-                    find(iter,state.getValue("GOTO"));//修改指针位置
+                    if(!find(iter,state.getValue("GOTO")))
+                    {
+                        error("LINE NUMBER ERROR");
+                    }//修改指针位置
                     continue;
                 }
             }
@@ -150,7 +153,8 @@ void Program::RUN(int start,EvalState& state){
             {
                 if(iter->line_number==state.getValue("is_IF_THEN"))
                 {
-                    find(iter, state.getValue("IF_THEN"));
+                    if(!find(iter, state.getValue("IF_THEN")))
+                        error("LINE NUMBER ERROR");
                     state.Delete("is_IF_THEN");
                     state.Delete("IF_THEN");
                     continue;

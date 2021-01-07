@@ -68,7 +68,7 @@ IdentifierExp::IdentifierExp(string name) {
 }
 
 int IdentifierExp::eval(EvalState & state) {
-   if (!state.isDefined(name)) error(name + " is undefined");
+   if (!state.isDefined(name)) error("VARIABLE NOT DEFINED");
    return state.getValue(name);
 }
 
@@ -116,13 +116,16 @@ int CompoundExp::eval(EvalState & state) {
       if (lhs->getType() != IDENTIFIER) {
          error("Illegal variable in assignment");
       }
+      string name=((IdentifierExp *) lhs)->getName();
+      if(name=="LET"||name=="PRINT"||name=="REM"||name=="IF"||name=="GOTO")
+          error("SYNTAX ERROR");
       int val = rhs->eval(state);
-      state.setValue(((IdentifierExp *) lhs)->getName(), val);
+      state.setValue(name, val);
       return val;
    }
    int left = lhs->eval(state);
    int right = rhs->eval(state);
-   if(right==0)error("DIVIDE BY ZERO");
+   if(right==0&&op=="/")error("DIVIDE BY ZERO");
    if (op == "+") return left + right;
    if (op == "-") return left - right;
    if (op == "*") return left * right;
