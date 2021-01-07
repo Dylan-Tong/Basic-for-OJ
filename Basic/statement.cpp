@@ -35,7 +35,7 @@ void LET::execute(EvalState &state){
 PRINT::PRINT(Expression* _exp):exp(_exp){}
 
 void PRINT::execute(EvalState& state){
-    cout<<exp->eval(state)<<endl;
+    cout<<exp->eval(state)<<"\n";
 }
 
 INPUT::INPUT(string s):var(s),value(0){};

@@ -35,7 +35,7 @@ int main() {
       try {
          processLine(getLine(), program, state);//evalstate相当于内存空间
       } catch (ErrorException & ex) {
-         cerr << "Error: " << ex.getMessage() << endl;
+         cerr<< ex.getMessage() << endl;
       }
    }
    return 0;
@@ -164,7 +164,7 @@ void processLine(string line, Program & program, EvalState & state) {
         else if(token=="PRINT")
         {
             Expression *exp=parseExp(scanner);
-            cout<<exp->eval(state)<<endl;
+            cout<<exp->eval(state)<<"\n";
         }
         else if(token=="INPUT")
         {
