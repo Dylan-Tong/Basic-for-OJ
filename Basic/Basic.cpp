@@ -169,7 +169,7 @@ void processLine(string line, Program & program, EvalState & state) {
         else if(token=="INPUT")
         {
             if(!scanner.hasMoreTokens())error("SYNTAX ERROR");
-            cout<<"? ";
+
             token=scanner.nextToken();
             string var=token;
             TokenType type=scanner.getTokenType(token);
@@ -177,11 +177,12 @@ void processLine(string line, Program & program, EvalState & state) {
             int value;
             while(true)
              {
+                cout<<" ? ";
                 scanner.setInput(getLine());
                 token=scanner.nextToken();
                 type=scanner.getTokenType(token);
-                if(type==NUMBER)break;
-                error("INVALID NUMBER");
+                if(type==NUMBER&&!scanner.hasMoreTokens())break;
+                cout<<"INVALID NUMBER"<<endl;
             }
             value=stringToInteger(token);
             state[var]=value;
